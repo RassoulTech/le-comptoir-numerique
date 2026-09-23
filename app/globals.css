@@ -1,0 +1,560 @@
+@import "tailwindcss";
+
+/* ==========================================================================
+   DESIGN SYSTEM — LE COMPTOIR NUMÉRIQUE
+   Source unique : couleurs, typographie, élévation, mouvement, rayons.
+   Aucune valeur visuelle ne doit être écrite en dur dans un composant.
+   ========================================================================== */
+
+@theme {
+  /* ----------------------------------------------------------------------
+     COULEURS DE MARQUE (officielles)
+     ---------------------------------------------------------------------- */
+  --color-foret: #173f35; /* vert forêt profond — couleur dominante */
+  --color-ivoire: #f5f0e6; /* ivoire — fond clair de référence */
+  --color-bronze: #b08d57; /* bronze — accent premium */
+  --color-anthracite: #252a28; /* anthracite — texte courant */
+
+  /* Teintes dérivées — survols, séparateurs, textes secondaires */
+  --color-foret-clair: #1f5548;
+  --color-foret-fonce: #0f2a24;
+  --color-ivoire-clair: #fbf8f2;
+  --color-ivoire-fonce: #ebe4d5;
+  --color-bronze-clair: #c6a473;
+  /* Bronze assombri : seule variante lisible pour du petit texte sur ivoire
+     (contraste 5,0:1 — le bronze standard ne fait que 2,6:1). */
+  --color-bronze-texte: #7a5f38;
+  --color-anthracite-doux: #5a615e;
+
+  /* ----------------------------------------------------------------------
+     TYPOGRAPHIE
+     Échelle fluide : une seule classe par niveau, qui s'adapte de 360 px
+     à 1920 px sans point de rupture manuel. Chaque niveau porte son propre
+     interlignage, son approche et sa graisse — c'est ce qui crée la
+     hiérarchie, pas la taille seule.
+     ---------------------------------------------------------------------- */
+  --font-sans: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
+
+  /* Titre de couverture (hero) */
+  --text-affichage: clamp(2.25rem, 1.6rem + 2.9vw, 3.6rem);
+  --text-affichage--line-height: 1.03;
+  --text-affichage--letter-spacing: -0.025em;
+  --text-affichage--font-weight: 800;
+
+  /* Titre de page */
+  --text-titre-1: clamp(2rem, 1.45rem + 2.4vw, 3.25rem);
+  --text-titre-1--line-height: 1.08;
+  --text-titre-1--letter-spacing: -0.022em;
+  --text-titre-1--font-weight: 800;
+
+  /* Titre de section */
+  --text-titre-2: clamp(1.625rem, 1.3rem + 1.45vw, 2.5rem);
+  --text-titre-2--line-height: 1.14;
+  --text-titre-2--letter-spacing: -0.018em;
+  --text-titre-2--font-weight: 700;
+
+  /* Sous-titre */
+  --text-titre-3: clamp(1.25rem, 1.15rem + 0.45vw, 1.5rem);
+  --text-titre-3--line-height: 1.25;
+  --text-titre-3--letter-spacing: -0.012em;
+  --text-titre-3--font-weight: 700;
+
+  /* Titre de carte */
+  --text-titre-4: 1.0625rem;
+  --text-titre-4--line-height: 1.4;
+  --text-titre-4--letter-spacing: -0.006em;
+  --text-titre-4--font-weight: 700;
+
+  /* Chapô — paragraphe d'introduction */
+  --text-chapo: clamp(1.0625rem, 1rem + 0.4vw, 1.25rem);
+  --text-chapo--line-height: 1.6;
+  --text-chapo--letter-spacing: -0.002em;
+  --text-chapo--font-weight: 400;
+
+  /* Texte courant */
+  --text-corps: 1rem;
+  --text-corps--line-height: 1.7;
+  --text-corps--letter-spacing: 0em;
+  --text-corps--font-weight: 400;
+
+  /* Texte secondaire */
+  --text-petit: 0.9375rem;
+  --text-petit--line-height: 1.65;
+  --text-petit--letter-spacing: 0em;
+  --text-petit--font-weight: 400;
+
+  /* Mentions, légendes */
+  --text-mention: 0.8125rem;
+  --text-mention--line-height: 1.55;
+  --text-mention--letter-spacing: 0.002em;
+  --text-mention--font-weight: 400;
+
+  /* Intitulé de section — petites capitales espacées */
+  --text-intitule: 0.75rem;
+  --text-intitule--line-height: 1.2;
+  --text-intitule--letter-spacing: 0.16em;
+  --text-intitule--font-weight: 600;
+
+  /* Approches réutilisables */
+  --tracking-intitule: 0.16em;
+  --tracking-serre: -0.03em;
+
+  /* ----------------------------------------------------------------------
+     ÉLÉVATION
+     Les ombres sont teintées en vert forêt, jamais en gris neutre : sur un
+     fond ivoire chaud, une ombre grise paraît sale. C'est le détail qui
+     fait la différence entre « plat » et « premium ».
+     ---------------------------------------------------------------------- */
+  --shadow-douce:
+    0 1px 2px rgb(23 63 53 / 0.04), 0 2px 6px rgb(23 63 53 / 0.04);
+  --shadow-carte:
+    0 1px 2px rgb(23 63 53 / 0.05), 0 4px 14px rgb(23 63 53 / 0.055);
+  --shadow-relief:
+    0 2px 4px rgb(23 63 53 / 0.06), 0 14px 32px rgb(23 63 53 / 0.1),
+    0 4px 10px rgb(23 63 53 / 0.05);
+  --shadow-entete:
+    0 1px 0 rgb(37 42 40 / 0.05), 0 6px 24px rgb(23 63 53 / 0.07);
+  --shadow-action: 0 1px 2px rgb(15 42 36 / 0.16), 0 4px 12px rgb(15 42 36 / 0.16);
+  --shadow-action-survol:
+    0 2px 4px rgb(15 42 36 / 0.18), 0 10px 22px rgb(15 42 36 / 0.22);
+
+  /* ----------------------------------------------------------------------
+     RAYONS
+     ---------------------------------------------------------------------- */
+  --radius-douce: 0.625rem;
+  --radius-action: 0.75rem;
+  --radius-carte: 1rem;
+  --radius-bloc: 1.5rem;
+
+  /* ----------------------------------------------------------------------
+     MOUVEMENT
+     Deux courbes suffisent. « sortie » décélère fortement en fin de course :
+     c'est ce qui donne la sensation de fluidité sur les apparitions.
+     ---------------------------------------------------------------------- */
+  --ease-sortie: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-douce: cubic-bezier(0.32, 0.72, 0, 1);
+
+  --duree-instant: 120ms;
+  --duree-rapide: 200ms;
+  --duree-normale: 320ms;
+  --duree-lente: 640ms;
+}
+
+/* ==========================================================================
+   BASES
+   ========================================================================== */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+    /* Évite que l'ancre d'une section passe sous l'en-tête collant */
+    scroll-padding-top: 6rem;
+  }
+
+  body {
+    background-color: var(--color-ivoire);
+    color: var(--color-anthracite);
+    font-family: var(--font-sans);
+    font-size: var(--text-corps);
+    line-height: 1.7;
+    text-rendering: optimizeLegibility;
+    font-synthesis-weight: none;
+  }
+
+  /* Équilibrage typographique des titres */
+  h1,
+  h2,
+  h3,
+  h4 {
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  /* Chiffres alignés verticalement dans les tableaux, prix et montants */
+  table,
+  [data-chiffres] {
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Accessibilité : anneau de focus visible au clavier sur tout le site */
+  :focus-visible {
+    outline: 2px solid var(--color-bronze);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  /* Sélection aux couleurs de la marque */
+  ::selection {
+    background-color: color-mix(in srgb, var(--color-bronze) 30%, transparent);
+    color: var(--color-foret-fonce);
+  }
+
+  /* Respect de la préférence système « réduire les animations ».
+     Le site reste entièrement utilisable, simplement sans mouvement. */
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+/* ==========================================================================
+   MOUVEMENT — APPARITION AU DÉFILEMENT
+   Le style masqué n'est appliqué QUE si la classe `js` est présente sur
+   <html> (ajoutée par un script inline avant le premier rendu). Sans
+   JavaScript, tout le contenu reste visible : rien ne disparaît jamais.
+   ========================================================================== */
+@layer components {
+  /* ---------------------------------------------------------------
+     VOILE PHOTO
+
+     Pose un texte ivoire sur une photo dont on ne connaît pas la
+     luminosité. Le vert forêt est opaque à 92 % dès 42 % de hauteur :
+     même sur une photo entièrement blanche, le rapport de contraste du
+     texte reste au-dessus de 7:1. Le titre doit donc rester dans le
+     tiers bas du cadre — c'est la contrainte que ce dégradé impose.
+
+     Il sert aussi la charte : le vert forêt reste la couleur dominante,
+     y compris sur les blocs illustrés par une photo.
+  --------------------------------------------------------------- */
+  .voile-photo {
+    background: linear-gradient(
+      to top,
+      var(--color-foret) 0%,
+      color-mix(in srgb, var(--color-foret) 92%, transparent) 42%,
+      color-mix(in srgb, var(--color-foret) 45%, transparent) 72%,
+      transparent 100%
+    );
+  }
+
+  /* Voile léger : unifie une photo sans texte par-dessus, pour que les
+     vignettes gardent la teinte de la marque. */
+  .teinte-photo {
+    background: color-mix(in srgb, var(--color-foret) 22%, transparent);
+  }
+
+  /* ---------------------------------------------------------------
+     RYTHME DES SECTIONS
+
+     Deux sections de même fond qui se suivent se confondaient. Un filet
+     d'un pixel les sépare, assez discret pour ne pas se voir isolément
+     mais suffisant pour marquer la fin d'un bloc.
+  --------------------------------------------------------------- */
+  .separation-douce {
+    border-top: 1px solid color-mix(in srgb, var(--color-anthracite) 9%, transparent);
+  }
+
+  .separation-claire {
+    border-top: 1px solid color-mix(in srgb, var(--color-ivoire) 14%, transparent);
+  }
+
+  .js .apparition {
+    opacity: 0;
+    transform: translate3d(0, var(--apparition-decalage, 1.25rem), 0);
+    will-change: opacity, transform;
+  }
+
+  .js .apparition.est-visible {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+    transition:
+      opacity var(--duree-lente) var(--ease-sortie)
+        var(--apparition-delai, 0ms),
+      transform var(--duree-lente) var(--ease-sortie)
+        var(--apparition-delai, 0ms);
+    will-change: auto;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .js .apparition {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  /* --- Entrée de la page de couverture, au chargement --- */
+  @keyframes entree-hero {
+    from {
+      opacity: 0;
+      transform: translate3d(0, 1.5rem, 0);
+    }
+    to {
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
+    }
+  }
+
+  .js .entree-hero > * {
+    animation: entree-hero var(--duree-lente) var(--ease-sortie) both;
+  }
+  .js .entree-hero > *:nth-child(1) {
+    animation-delay: 60ms;
+  }
+  .js .entree-hero > *:nth-child(2) {
+    animation-delay: 140ms;
+  }
+  .js .entree-hero > *:nth-child(3) {
+    animation-delay: 220ms;
+  }
+  .js .entree-hero > *:nth-child(4) {
+    animation-delay: 300ms;
+  }
+  .js .entree-hero > *:nth-child(5) {
+    animation-delay: 380ms;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .js .entree-hero > * {
+      animation: none;
+    }
+  }
+
+  /* --- Filet bronze sous les intitulés de section --- */
+  .filet-bronze::after {
+    content: "";
+    display: block;
+    width: 2.25rem;
+    height: 2px;
+    margin-top: 0.875rem;
+    border-radius: 2px;
+    background: linear-gradient(
+      90deg,
+      var(--color-bronze),
+      color-mix(in srgb, var(--color-bronze) 25%, transparent)
+    );
+  }
+
+  /* --- Carte : élévation au survol --- */
+  .carte {
+    transition:
+      transform var(--duree-normale) var(--ease-sortie),
+      box-shadow var(--duree-normale) var(--ease-sortie),
+      border-color var(--duree-rapide) var(--ease-douce);
+  }
+
+  @media (hover: hover) {
+    .carte:hover {
+      transform: translate3d(0, -3px, 0);
+      box-shadow: var(--shadow-relief);
+    }
+  }
+
+  /* --- Action : retour au clic + flèche qui avance au survol --- */
+  .action {
+    transition:
+      transform var(--duree-instant) var(--ease-douce),
+      box-shadow var(--duree-rapide) var(--ease-douce),
+      background-color var(--duree-rapide) var(--ease-douce),
+      color var(--duree-rapide) var(--ease-douce);
+  }
+
+  .action:active {
+    transform: scale(0.975);
+  }
+
+  .action .fleche {
+    transition: transform var(--duree-normale) var(--ease-sortie);
+  }
+
+  @media (hover: hover) {
+    .action:hover .fleche {
+      transform: translateX(3px);
+    }
+  }
+
+  /* --- Flottement de la composition de couverture ---
+     Amplitude volontairement faible (6 à 10 px) et durée longue : le
+     mouvement doit se sentir plutôt que se voir. Trois rythmes légèrement
+     différents évitent que les cartes bougent à l'unisson. */
+  @keyframes flottement {
+    0%,
+    100% {
+      transform: translate3d(0, 0, 0);
+    }
+    50% {
+      transform: translate3d(0, var(--amplitude, -8px), 0);
+    }
+  }
+
+  .js .flottement-1,
+  .js .flottement-2,
+  .js .flottement-3 {
+    animation: flottement var(--duree-flottement, 9s) ease-in-out infinite;
+  }
+  .js .flottement-1 {
+    --amplitude: -7px;
+    --duree-flottement: 9s;
+  }
+  .js .flottement-2 {
+    --amplitude: -11px;
+    --duree-flottement: 11s;
+    animation-delay: -2.5s;
+  }
+  .js .flottement-3 {
+    --amplitude: -9px;
+    --duree-flottement: 10s;
+    animation-delay: -5s;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .js .flottement-1,
+    .js .flottement-2,
+    .js .flottement-3 {
+      animation: none;
+    }
+  }
+
+  /* --- Texture discrète du hero --- */
+  .texture-hero {
+    background-image:
+      radial-gradient(
+        ellipse 80% 60% at 78% 8%,
+        color-mix(in srgb, var(--color-bronze) 22%, transparent),
+        transparent 65%
+      ),
+      radial-gradient(
+        ellipse 60% 50% at 15% 85%,
+        color-mix(in srgb, var(--color-foret-clair) 60%, transparent),
+        transparent 70%
+      ),
+      linear-gradient(
+        180deg,
+        color-mix(in srgb, var(--color-foret-clair) 55%, transparent),
+        transparent 45%
+      );
+  }
+
+  .grille-hero {
+    background-image:
+      linear-gradient(var(--color-ivoire) 1px, transparent 1px),
+      linear-gradient(90deg, var(--color-ivoire) 1px, transparent 1px);
+    background-size: 4.5rem 4.5rem;
+    mask-image: radial-gradient(
+      ellipse 70% 80% at 30% 40%,
+      #000 15%,
+      transparent 80%
+    );
+  }
+
+  /* ---------------------------------------------------------------
+     CLASSES ULTRA-PREMIUM (Glassmorphism, Bento, Badges & Glow)
+  --------------------------------------------------------------- */
+  .glass-foret {
+    background: color-mix(in srgb, var(--color-foret-fonce) 75%, transparent);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid color-mix(in srgb, var(--color-ivoire) 12%, transparent);
+  }
+
+  .glass-ivoire {
+    background: color-mix(in srgb, var(--color-ivoire-clair) 82%, transparent);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid color-mix(in srgb, var(--color-anthracite) 8%, transparent);
+  }
+
+  .glass-header {
+    background: color-mix(in srgb, var(--color-ivoire) 88%, transparent);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+  }
+
+  .degrade-bronze {
+    background: linear-gradient(
+      135deg,
+      #c6a473 0%,
+      #b08d57 50%,
+      #8f6e3c 100%
+    );
+  }
+
+  .texte-gradient-bronze {
+    background: linear-gradient(
+      135deg,
+      #d4b585 0%,
+      #b08d57 50%,
+      #967543 100%
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .carte-interactive {
+    position: relative;
+    transition:
+      transform var(--duree-normale) var(--ease-sortie),
+      box-shadow var(--duree-normale) var(--ease-sortie),
+      border-color var(--duree-rapide) var(--ease-douce);
+  }
+
+  .carte-interactive::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(
+      135deg,
+      color-mix(in srgb, var(--color-bronze) 40%, transparent),
+      transparent 60%
+    );
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity var(--duree-normale) var(--ease-douce);
+  }
+
+  @media (hover: hover) {
+    .carte-interactive:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 30px -10px color-mix(in srgb, var(--color-foret) 15%, transparent);
+    }
+    .carte-interactive:hover::before {
+      opacity: 1;
+    }
+  }
+
+  .badge-bronze {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    padding: 0.25rem 0.75rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    border-radius: 9999px;
+    background: color-mix(in srgb, var(--color-bronze) 14%, transparent);
+    color: var(--color-bronze-texte);
+    border: 1px solid color-mix(in srgb, var(--color-bronze) 30%, transparent);
+  }
+
+  .badge-bronze-sombre {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    padding: 0.25rem 0.75rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    border-radius: 9999px;
+    background: color-mix(in srgb, var(--color-bronze-clair) 18%, transparent);
+    color: var(--color-bronze-clair);
+    border: 1px solid color-mix(in srgb, var(--color-bronze-clair) 35%, transparent);
+    backdrop-filter: blur(8px);
+  }
+}
+
