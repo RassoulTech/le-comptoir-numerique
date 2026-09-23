@@ -14,12 +14,31 @@ export default function ReseauxSociaux({
   const reseaux = entreprise.reseaux.filter((r) => r.url);
   const reseauxNonDefinis = entreprise.reseaux.filter((r) => !r.url);
 
-  const bgClass = variant === "dark" ? "bg-ivoire/10" : "bg-ivoire/5";
-  const hoverClass = variant === "dark" ? "hover:bg-ivoire/20" : "hover:bg-ivoire/10";
-  const textClass = variant === "dark" ? "text-ivoire/90" : "text-foret/70";
+  // Couleurs adaptées au contexte
+  let bgClass, hoverClass, textClass, ringClass;
+  
+  if (variant === "dark") {
+    // Sur fond sombre (ivoire/clair)
+    bgClass = "bg-ivoire/10";
+    hoverClass = "hover:bg-ivoire/20";
+    textClass = "text-ivoire/90";
+    ringClass = "ring-ivoire/30";
+  } else if (variant === "footer") {
+    // Sur fond vert forêt (pied de page)
+    bgClass = "bg-bronze/15";
+    hoverClass = "hover:bg-bronze/25";
+    textClass = "text-ivoire";
+    ringClass = "ring-bronze/40";
+  } else {
+    // Light par défaut (sur fond ivoire/clair)
+    bgClass = "bg-foret/10";
+    hoverClass = "hover:bg-foret/15";
+    textClass = "text-foret";
+    ringClass = "ring-foret/30";
+  }
 
   return (
-    <div className={`flex items-center flex-wrap gap-3 ${className}`}>
+    <div className={`flex items-center flex-wrap gap-2 ${className}`}>
       {/* Réseaux sociaux définis */}
       {reseaux.map((reseau) => (
         <a

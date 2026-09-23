@@ -35,7 +35,7 @@ export default function PiedDePage() {
 
             {/* Réseaux sociaux avec icônes premium */}
             <div className="mt-6">
-              <ReseauxSociaux variant="light" />
+              <ReseauxSociaux variant="footer" />
             </div>
           </div>
 
@@ -182,35 +182,6 @@ export default function PiedDePage() {
             <Placeholder sombre>{entreprise.legal.rccm}</Placeholder>
           </p>
         </div>
-
-        {/* Crédits photo — une seule liste pour tout le site, comme le
-            demandent les conditions d'utilisation de l'API Unsplash. */}
-        <p className="mt-4 text-mention text-ivoire/60">
-          Photos d&apos;illustration :{" "}
-          {creditsTous.map((credit, index) => (
-            <span key={credit.profil}>
-              {index > 0 && " · "}
-              <a
-                href={credit.profil}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="underline-offset-2 hover:text-ivoire/90 hover:underline"
-              >
-                {credit.auteur}
-              </a>
-            </span>
-          ))}{" "}
-          sur{" "}
-          <a
-            href="https://unsplash.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="underline-offset-2 hover:text-ivoire/90 hover:underline"
-          >
-            Unsplash
-          </a>
-          .
-        </p>
       </Conteneur>
     </footer>
   );

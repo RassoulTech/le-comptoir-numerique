@@ -1,9 +1,10 @@
-import MotifUnivers from "./MotifUnivers";
+import Photo from "./Photo";
 import Icone from "./Icone";
 
 /**
  * Composition visuelle animée avec glissement depuis la droite et fade
  * Chaque carte arrive avec un délai progressif pour un effet cascade fluide
+ * Utilise maintenant des images professionnelles au lieu de compositions vectorielles
  */
 const CARTES = [
   {
@@ -15,6 +16,11 @@ const CARTES = [
     ratio: "aspect-[3/4]",
     flottement: "flottement-1",
     delai: "var(--animation-delai-0, 0ms)",
+    image: {
+      image: "/images/hero-tech-audio.jpg",
+      imageSource: "local",
+      alt: "Équipements audio et technologie professionnels - Technologie & Médias"
+    }
   },
   {
     slug: "solutions-numeriques",
@@ -25,6 +31,11 @@ const CARTES = [
     ratio: "aspect-[4/3]",
     flottement: "flottement-2",
     delai: "var(--animation-delai-1, 200ms)",
+    image: {
+      image: "/images/hero-tech-computer.jpg",
+      imageSource: "local",
+      alt: "Ordinateur professionnel et interface numérique - Solutions Web"
+    }
   },
   {
     slug: "electromenager",
@@ -35,6 +46,11 @@ const CARTES = [
     ratio: "aspect-[4/3]",
     flottement: "flottement-3",
     delai: "var(--animation-delai-2, 400ms)",
+    image: {
+      image: "/images/hero-tech-devices.jpg",
+      imageSource: "local",
+      alt: "Appareils électroniques professionnels - Électroménager"
+    }
   },
 ];
 
@@ -67,11 +83,14 @@ export default function CompositionHeroAnimee({ className = "" }) {
               "--carte-index": index,
             }}
           >
-            <MotifUnivers
-              slug={carte.slug}
-              sombre
-              className={`${carte.ratio} w-full flex-1 transition-transform duration-700 group-hover:scale-105`}
-            />
+            <div className={`${carte.ratio} w-full flex-1 relative overflow-hidden transition-transform duration-700 group-hover:scale-105`}>
+              <Photo
+                visuel={carte.image}
+                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                prioritaire={index === 0}
+                className="transition-transform duration-700"
+              />
+            </div>
 
             {/* Étiquette d'univers */}
             <figcaption className="relative z-10 flex flex-col gap-1 border-t border-ivoire/12 bg-foret-fonce/90 backdrop-blur-md px-3.5 py-2.5">
