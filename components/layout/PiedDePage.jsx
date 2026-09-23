@@ -1,12 +1,13 @@
 import Image from "next/image";
 import Link from "next/link";
-import { entreprise, lienWhatsApp } from "@/content/entreprise";
+import { entreprise, lienWhatsApp, lienGroupeWhatsApp } from "@/content/entreprise";
 import { liensNavigation, lienDevis } from "@/lib/navigation";
 import { univers } from "@/content/univers";
 import { creditsTous } from "@/content/credits";
 import Conteneur from "@/components/ui/Conteneur";
 import Icone from "@/components/ui/Icone";
 import Placeholder from "@/components/ui/Placeholder";
+import ReseauxSociaux from "@/components/ui/ReseauxSociaux";
 
 export default function PiedDePage() {
   const annee = new Date().getFullYear();
@@ -32,24 +33,10 @@ export default function PiedDePage() {
               {entreprise.positionnement}
             </p>
 
-            <ul className="mt-6 flex flex-wrap gap-2">
-              {entreprise.reseaux.map((reseau) => (
-                <li key={reseau.nom}>
-                  {reseau.url ? (
-                    <a
-                      href={reseau.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex rounded-md px-3 py-1.5 text-petit text-ivoire/80 ring-1 ring-inset ring-ivoire/25 transition-colors hover:bg-ivoire/10 hover:text-ivoire"
-                    >
-                      {reseau.nom}
-                    </a>
-                  ) : (
-                    <Placeholder sombre>{`[${reseau.nom}]`}</Placeholder>
-                  )}
-                </li>
-              ))}
-            </ul>
+            {/* Réseaux sociaux avec icônes premium */}
+            <div className="mt-6">
+              <ReseauxSociaux variant="light" />
+            </div>
           </div>
 
           {/* Navigation */}
@@ -126,12 +113,12 @@ export default function PiedDePage() {
                   className="mt-0.5 size-4 shrink-0 text-bronze"
                 />
                 <a
-                  href={lienWhatsApp()}
+                  href={lienGroupeWhatsApp()}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-ivoire/85 transition-colors hover:text-ivoire"
                 >
-                  WhatsApp
+                  Groupe WhatsApp
                 </a>
               </li>
               <li className="flex gap-3">
@@ -142,12 +129,17 @@ export default function PiedDePage() {
                 {entreprise.email.aDefinir ? (
                   <Placeholder sombre>{entreprise.email.valeur}</Placeholder>
                 ) : (
-                  <a
-                    href={`mailto:${entreprise.email.valeur}`}
-                    className="text-ivoire/85 transition-colors hover:text-ivoire"
-                  >
-                    {entreprise.email.valeur}
-                  </a>
+                  <div className="flex flex-col">
+                    <a
+                      href={`mailto:${entreprise.email.valeur}`}
+                      className="text-ivoire/85 transition-colors hover:text-ivoire"
+                    >
+                      {entreprise.email.affichage}
+                    </a>
+                    <span className="text-mention text-ivoire/60">
+                      {entreprise.email.horaires}
+                    </span>
+                  </div>
                 )}
               </li>
               <li className="flex gap-3">

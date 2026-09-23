@@ -33,13 +33,16 @@ export const entreprise = {
     affichage: "+221 77 591 94 73",
     messagePreRempli:
       "Bonjour, je vous contacte depuis le site du Comptoir Numérique.",
+    groupeUrl: "https://chat.whatsapp.com/IqPWFPuKjGIKmzKtGlMvgM?mode=gi_t",
     aDefinir: false,
   },
 
   /* --- Email (à fournir) --- */
   email: {
-    valeur: "[Email]",
-    aDefinir: true,
+    valeur: "digigeek221@gmail.com",
+    affichage: "digigeek221@gmail.com",
+    horaires: "09h - 22h",
+    aDefinir: false,
   },
 
   /* --- Adresse (ville confirmée, précision à fournir) --- */
@@ -55,16 +58,16 @@ export const entreprise = {
 
   /* --- Horaires (à fournir) --- */
   horaires: {
-    lignes: [{ jours: "[Jours d'ouverture]", heures: "[Horaires]" }],
-    aDefinir: true,
+    lignes: [{ jours: "Lundi - Dimanche", heures: "09h - 22h" }],
+    aDefinir: false,
   },
 
   /* --- Réseaux sociaux (URLs à fournir) --- */
   reseaux: [
-    { nom: "Facebook", url: null, aDefinir: true },
-    { nom: "Instagram", url: null, aDefinir: true },
-    { nom: "TikTok", url: null, aDefinir: true },
-    { nom: "LinkedIn", url: null, aDefinir: true },
+    { nom: "Facebook", icone: "facebook", url: null, aDefinir: true },
+    { nom: "Instagram", icone: "instagram", url: null, aDefinir: true },
+    { nom: "TikTok", icone: "tiktok", url: null, aDefinir: true },
+    { nom: "LinkedIn", icone: "linkedin", url: null, aDefinir: true },
   ],
 
   /* --- Mentions légales (à fournir) --- */
@@ -88,4 +91,9 @@ export const siteUrl =
 export function lienWhatsApp(message) {
   const texte = message ?? entreprise.whatsapp.messagePreRempli;
   return `https://wa.me/${entreprise.whatsapp.numero}?text=${encodeURIComponent(texte)}`;
+}
+
+/** Retourne l'URL du groupe WhatsApp. */
+export function lienGroupeWhatsApp() {
+  return entreprise.whatsapp.groupeUrl;
 }

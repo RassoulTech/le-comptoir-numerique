@@ -1,11 +1,12 @@
 import { metadonnees } from "@/lib/seo";
-import { entreprise, lienWhatsApp } from "@/content/entreprise";
+import { entreprise, lienWhatsApp, lienGroupeWhatsApp } from "@/content/entreprise";
 import Section from "@/components/ui/Section";
 import Conteneur from "@/components/ui/Conteneur";
 import Bouton from "@/components/ui/Bouton";
 import Icone from "@/components/ui/Icone";
 import Placeholder from "@/components/ui/Placeholder";
 import Apparition from "@/components/ui/Apparition";
+import ReseauxSociaux from "@/components/ui/ReseauxSociaux";
 
 export const metadata = metadonnees({
   titre: "Contactez Le Comptoir Numérique à Thiès",
@@ -33,18 +34,18 @@ export default function PageContact() {
       icone: "whatsapp",
       titre: "WhatsApp Business",
       texte:
-        "Idéal pour nous envoyer une référence de matériel, une photo ou échanger par message.",
-      libelle: "Démarrer la discussion",
-      lien: lienWhatsApp("Bonjour Le Comptoir Numérique, j'aimerais avoir des informations."),
+        "Rejoignez notre groupe WhatsApp pour les mises à jour en direct, les promotions et les conseils produits.",
+      libelle: "Rejoindre le groupe",
+      lien: lienGroupeWhatsApp(),
       externe: true,
-      badge: "Réponse express",
+      badge: "Groupe WhatsApp",
       couleurIcone: "text-[#25D366]",
     },
     {
       icone: "email",
       titre: "Email Professionnel",
       texte: "Pour les dossiers complets, cahiers des charges ou demandes institutionnelles.",
-      libelle: email.valeur,
+      libelle: email.affichage,
       lien: `mailto:${email.valeur}`,
       aDefinir: email.aDefinir,
       badge: "Formel",
@@ -174,24 +175,7 @@ export default function PageContact() {
                     Suivez nos actualités
                   </dt>
                   <dd className="mt-2.5">
-                    <ul className="flex flex-wrap gap-2">
-                      {reseaux.map((reseau) => (
-                        <li key={reseau.nom}>
-                          {reseau.url ? (
-                            <a
-                              href={reseau.url}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="action inline-flex rounded-full px-3.5 py-1.5 text-mention font-semibold text-foret bg-ivoire-fonce border border-anthracite/10 hover:bg-foret hover:text-ivoire transition-colors"
-                            >
-                              {reseau.nom}
-                            </a>
-                          ) : (
-                            <Placeholder>{`[${reseau.nom}]`}</Placeholder>
-                          )}
-                        </li>
-                      ))}
-                    </ul>
+                    <ReseauxSociaux variant="dark" showLabels={false} />
                   </dd>
                 </div>
               </div>
