@@ -12,7 +12,7 @@ import Section from "@/components/ui/Section";
 import Bouton from "@/components/ui/Bouton";
 import Icone from "@/components/ui/Icone";
 import Apparition from "@/components/ui/Apparition";
-import CompositionHero from "@/components/ui/CompositionHero";
+import HeroSection from "@/components/ui/HeroSection";
 import CarteUnivers from "@/components/ui/CarteUnivers";
 import CarteService from "@/components/ui/CarteService";
 import BlocCta from "@/components/ui/BlocCta";
@@ -64,93 +64,9 @@ export default function PageAccueil() {
   return (
     <>
       {/* ---------------------------------------------------------------
-          COUVERTURE (HERO 2.0 ULTRA-PREMIUM)
+          COUVERTURE (HERO 2.0 ULTRA-PREMIUM - REFACTORISÉE)
       --------------------------------------------------------------- */}
-      <section className="texture-hero relative overflow-hidden bg-foret text-ivoire">
-        {/* Grille technique & halos d'ambiance */}
-        <div
-          aria-hidden="true"
-          className="grille-hero pointer-events-none absolute inset-0 opacity-[0.06]"
-        />
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute -top-40 right-1/4 size-96 rounded-full bg-bronze/10 blur-3xl"
-        />
-
-        <Conteneur className="relative py-20 sm:py-24 lg:py-28">
-          <div className="grid items-center gap-14 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)] lg:gap-16">
-            {/* Composition visuelle à gauche sur desktop */}
-            <div className="order-2 lg:order-1">
-              <CompositionHero className="mx-auto max-w-md lg:max-w-none" />
-            </div>
-
-            {/* Message & Actions à droite */}
-            <div className="entree-hero order-1 lg:order-2">
-              <div className="inline-flex items-center gap-2">
-                <span className="badge-bronze-sombre">
-                  {entreprise.signature}
-                </span>
-                <span className="hidden sm:inline-block text-mention text-ivoire/60">
-                  · Thiès, Sénégal
-                </span>
-              </div>
-
-              <h1 className="mt-6 text-affichage text-ivoire leading-tight">
-                Vos équipements technologiques et solutions numériques,{" "}
-                <span className="texte-gradient-bronze">au même comptoir.</span>
-              </h1>
-
-              <p className="mt-6 text-chapo text-ivoire/80">
-                Électronique, technologie, électroménager et connectique : nous
-                rassemblons les équipements du quotidien. Et nous concevons les
-                outils digitaux qui propulsent votre activité.
-              </p>
-
-              <div className="mt-9 flex flex-col gap-3.5 sm:flex-row sm:items-center">
-                <Bouton href="/produits" variante="clair" taille="grand">
-                  Découvrir les produits
-                  <Icone nom="fleche" className="size-5" />
-                </Bouton>
-                <Bouton href="/services" variante="contourClair" taille="grand">
-                  Nos solutions numériques
-                </Bouton>
-              </div>
-
-              {/* Repères de confiance */}
-              <ul className="mt-12 flex flex-wrap gap-x-8 gap-y-4 border-t border-ivoire/15 pt-7 text-mention text-ivoire/75">
-                <li className="flex items-center gap-2.5">
-                  <Icone
-                    nom="localisation"
-                    className="size-4 text-bronze-clair shrink-0"
-                  />
-                  <span>{entreprise.adresse.ville}, {entreprise.adresse.pays}</span>
-                </li>
-                <li className="flex items-center gap-2.5">
-                  <Icone
-                    nom="whatsapp"
-                    className="size-4 text-[#25D366] shrink-0"
-                  />
-                  <a
-                    href={lienWhatsApp()}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="transition-colors hover:text-ivoire hover:underline"
-                  >
-                    Assistance WhatsApp directe
-                  </a>
-                </li>
-                <li className="flex items-center gap-2.5">
-                  <Icone
-                    nom="check"
-                    className="size-4 text-bronze-clair shrink-0"
-                  />
-                  <span>{univers.length} univers d&apos;expertise</span>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </Conteneur>
-      </section>
+      <HeroSection />
 
       {/* ---------------------------------------------------------------
           POINTS FORTS (BENTO-GRID PRO)
