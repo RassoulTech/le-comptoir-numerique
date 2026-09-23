@@ -1,4 +1,4 @@
-import { photo } from "@/lib/photos";
+import { photo, photoLocal } from "@/lib/photos";
 
 /**
  * PÔLE NUMÉRIQUE — DEUX OFFRES DISTINCTES
@@ -46,13 +46,7 @@ export const solutions = [
     inclus: ["Site vitrine", "Site d'entreprise", "Refonte de site existant"],
     icone: "web",
     visuel: {
-      ...photo(
-        "photo-1659428167876-a5a52756f421",
-        "a-couple-of-laptops-on-a-table-MJZ4q4v1kdw",
-        "GoodNotes 5",
-        "goodnotes",
-      ),
-      alt: "Un même site affiché sur ordinateur, tablette et téléphone",
+      ...photoLocal("services/creation-sites-web.jpg", "Site web moderne affiché sur ordinateur, tablette et téléphone"),
     },
   },
   {
@@ -63,13 +57,7 @@ export const solutions = [
     inclus: ["Application web", "Espace client", "Outil métier"],
     icone: "application",
     visuel: {
-      ...photo(
-        "photo-1767449441925-737379bc2c4d",
-        "mobile-app-interface-design-with-map-and-social-feed-nOY38cJyZaA",
-        "Faiz Rhm",
-        "faiz_rhm",
-      ),
-      alt: "Écrans d'une application mobile",
+      ...photoLocal("services/developpement-applications.jpg", "Application web et interface utilisateur moderne"),
     },
   },
   {
@@ -80,13 +68,7 @@ export const solutions = [
     inclus: ["Gestion de stock", "Suivi des ventes", "Facturation"],
     icone: "gestion",
     visuel: {
-      ...photo(
-        "photo-1778790891354-5daafd82a619",
-        "customer-pays-cashier-at-a-counter-in-a-shop-W7hPXj_XM5w",
-        "SpotOn",
-        "spotonpos",
-      ),
-      alt: "Encaissement à la caisse d'une boutique",
+      ...photoLocal("services/support-client.jpg", "Support client professionnel et assistance technique"),
     },
   },
   {
@@ -135,13 +117,7 @@ export const solutions = [
     inclus: ["Analyse des besoins", "Mise en place par étapes", "Suivi"],
     icone: "entreprise",
     visuel: {
-      ...photo(
-        "photo-1655720357872-ce227e4164ba",
-        "a-group-of-people-sitting-on-a-couch-looking-at-a-laptop-M7ALc3UuX_g",
-        "Iwaria Inc.",
-        "iwaria",
-      ),
-      alt: "Équipe réunie autour d'un ordinateur portable",
+      ...photoLocal("services/formation-assistance.jpg", "Équipe collaborant et recevant une formation/assistance"),
     },
   },
 ];

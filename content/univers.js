@@ -1,4 +1,4 @@
-import { photo } from "@/lib/photos";
+import { photo, photoLocal } from "@/lib/photos";
 
 /**
  * LES UNIVERS DU COMPTOIR NUMÉRIQUE
@@ -67,13 +67,7 @@ export const univers = [
     icone: "casque",
     rang: "majeur",
     visuel: {
-      ...photo(
-        "photo-1589903308904-1010c2294adc",
-        "black-and-silver-headphones-on-black-and-silver-microphone-ZDNyhmgkZlQ",
-        "Will Francis",
-        "willfrancis",
-      ),
-      alt: "Microphone de studio et casque posés sur un bureau",
+      ...photoLocal("produits/audio-video.jpg", "Microphone de studio et équipement audio professionnel"),
     },
   },
   {
@@ -91,13 +85,7 @@ export const univers = [
     icone: "accessoires",
     rang: "majeur",
     visuel: {
-      ...photo(
-        "photo-1555664424-778a1e5e1b48",
-        "flat-lay-photography-of-circuit-board-zP7X_B86xOg",
-        "Robin Glauser",
-        "nahakiole",
-      ),
-      alt: "Carte électronique vue de dessus",
+      ...photoLocal("produits/electronique.jpg", "Appareils et équipements électroniques professionnels"),
     },
   },
   {
@@ -116,13 +104,7 @@ export const univers = [
     icone: "electrique",
     rang: "secondaire",
     visuel: {
-      ...photo(
-        "photo-1635335874521-7987db781153",
-        "a-bunch-of-wires-are-plugged-into-a-switch-box-47jO5Y8nsYo",
-        "mostafa mahmoudi",
-        "mostafa_mahmoudi24",
-      ),
-      alt: "Tableau électrique et faisceau de câbles raccordés",
+      ...photoLocal("produits/electrique.jpg", "Câbles et équipements électriques professionnels"),
     },
   },
   {
@@ -140,13 +122,7 @@ export const univers = [
     icone: "electromenager",
     rang: "secondaire",
     visuel: {
-      ...photo(
-        "photo-1556911220-bff31c812dba",
-        "modern-white-kitchen-with-marble-island-GliaHAJ3_5A",
-        "Jason Briscoe",
-        "jsnbrsc",
-      ),
-      alt: "Cuisine équipée avec ses appareils domestiques",
+      ...photoLocal("produits/electromenager.jpg", "Équipements électroménagers modernes et professionnels"),
     },
   },
   {
@@ -168,13 +144,7 @@ export const univers = [
     /** Seul univers qui ne renvoie pas vers le catalogue produits. */
     href: "/services",
     visuel: {
-      ...photo(
-        "photo-1498050108023-c5249f4df085",
-        "a-macbook-with-lines-of-code-on-its-screen-on-a-busy-desk-m_HRfLhgABo",
-        "Christopher Gower",
-        "cgower",
-      ),
-      alt: "Ordinateur portable affichant des lignes de code sur un bureau",
+      ...photoLocal("hero-tech-computer.jpg", "Solution numérique moderne : ordinateur portable affichant une interface web"),
     },
   },
 ];
