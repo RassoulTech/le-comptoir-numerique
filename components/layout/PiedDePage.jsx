@@ -69,8 +69,8 @@ export default function PiedDePage() {
             </ul>
           </nav>
 
-          {/* Univers — les cinq pôles, y compris le pôle numérique qui
-              renvoie vers /services et non vers le catalogue produits. */}
+          {/* Univers — les quatre catégories produits, chacune vers sa
+              page dédiée, et le pôle numérique vers le sien. */}
           <nav aria-label="Pied de page — univers" className="lg:col-span-3">
             <h2 className="text-intitule text-bronze-clair uppercase">
               Nos univers
@@ -79,7 +79,7 @@ export default function PiedDePage() {
               {univers.map((u) => (
                 <li key={u.slug}>
                   <Link
-                    href={u.href ?? `/produits#${u.slug}`}
+                    href={u.href ?? `/produits/${u.slug}`}
                     className="inline-block py-1.5 text-petit text-ivoire/80 transition-colors hover:text-ivoire"
                   >
                     {u.nom}
@@ -95,18 +95,27 @@ export default function PiedDePage() {
               Contact
             </h2>
             <ul className="mt-5 space-y-4 text-petit">
-              <li className="flex gap-3">
-                <Icone
-                  nom="telephoneAppel"
-                  className="mt-0.5 size-4 shrink-0 text-bronze"
-                />
-                <a
-                  href={entreprise.telephone.lien}
-                  className="text-ivoire/85 transition-colors hover:text-ivoire"
-                >
-                  {entreprise.telephone.affichage}
-                </a>
-              </li>
+              {/* Les deux pôles, chacun avec son numéro : le visiteur
+                  atteint directement le bon interlocuteur. */}
+              {Object.entries(entreprise.poles).map(([cle, pole]) => (
+                <li key={cle} className="flex gap-3">
+                  <Icone
+                    nom="telephoneAppel"
+                    className="mt-0.5 size-4 shrink-0 text-bronze"
+                  />
+                  <span className="flex flex-col">
+                    <span className="text-mention uppercase tracking-wide text-ivoire/60">
+                      {pole.nom}
+                    </span>
+                    <a
+                      href={pole.telephone.lien}
+                      className="text-ivoire/85 transition-colors hover:text-ivoire"
+                    >
+                      {pole.telephone.affichage}
+                    </a>
+                  </span>
+                </li>
+              ))}
               <li className="flex gap-3">
                 <Icone
                   nom="whatsapp"

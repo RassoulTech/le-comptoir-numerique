@@ -81,7 +81,7 @@ export default function HeroSection() {
                 Découvrir les produits
                 <Icone nom="fleche" className="size-5" />
               </Bouton>
-              <Bouton href="/services" variante="contourClair" taille="grand">
+              <Bouton href="/solutions-numeriques" variante="contourClair" taille="grand">
                 Nos solutions numériques
               </Bouton>
             </div>
@@ -116,7 +116,7 @@ export default function HeroSection() {
                   nom="check"
                   className="size-4 text-bronze-clair shrink-0"
                 />
-                <span>5 univers d&apos;expertise</span>
+                <span>4 catégories de produits + solutions numériques</span>
               </li>
             </ul>
           </div>

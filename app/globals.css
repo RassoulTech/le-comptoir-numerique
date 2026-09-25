@@ -22,8 +22,9 @@
   --color-ivoire-fonce: #ebe4d5;
   --color-bronze-clair: #c6a473;
   /* Bronze assombri : seule variante lisible pour du petit texte sur ivoire
-     (contraste 5,0:1 — le bronze standard ne fait que 2,6:1). */
-  --color-bronze-texte: #7a5f38;
+     (contraste ~5,8:1 sur ivoire, ~4,8:1 sur ivoire-fonce — le bronze
+     standard ne fait que 2,6:1). */
+  --color-bronze-texte: #6e5430;
   --color-anthracite-doux: #5a615e;
 
   /* ----------------------------------------------------------------------
@@ -159,6 +160,9 @@
     line-height: 1.7;
     text-rendering: optimizeLegibility;
     font-synthesis-weight: none;
+    /* Garde-fou : aucun défilement horizontal ne doit exister (brief §33).
+       `clip` coupe sans transformer le body en conteneur de scroll. */
+    overflow-x: clip;
   }
 
   /* Équilibrage typographique des titres */
@@ -547,14 +551,15 @@
     gap: 0.375rem;
     padding: 0.25rem 0.75rem;
     font-size: 0.75rem;
-    font-weight: 600;
+    font-weight: 700;
     letter-spacing: 0.05em;
     text-transform: uppercase;
     border-radius: 9999px;
-    background: color-mix(in srgb, var(--color-bronze-clair) 18%, transparent);
-    color: var(--color-bronze-clair);
-    border: 1px solid color-mix(in srgb, var(--color-bronze-clair) 35%, transparent);
-    backdrop-filter: blur(8px);
+    /* Bronze plein sur texte foncé : le couple inverse (bronze clair sur
+       fond sombre) plafonnait sous 4,5:1 selon l'audit de contraste. */
+    background: var(--color-bronze);
+    color: var(--color-foret-fonce);
+    border: 1px solid transparent;
   }
 
   /* ==========================================================================
@@ -789,6 +794,355 @@
   @media (prefers-reduced-motion: reduce) {
     .js .hero-images__badge {
       animation: none;
+    }
+  }
+
+  /* ========================================================================
+     VISITE CINÉMATIQUE — parcours à chapitres de la homepage.
+
+     Deux modes :
+     - statique (défaut, sans JS ou prefers-reduced-motion) : chapitres
+       empilés, complets, lisibles — le site reste compréhensible sans
+       l'expérience (brief §23, §24, §48) ;
+     - cinéma (html.js actif) : bloc sticky plein écran, fondu enchaîné
+       des scènes au défilement, léger zoom par scène pour suggérer
+       l'avancée de la caméra.
+     ======================================================================== */
+
+  .visite {
+    position: relative;
+    /* Mode statique par défaut : la hauteur suit le contenu. */
+    height: auto;
+  }
+
+  /* Lien d'évitement — visible, discret, toujours au même endroit. */
+  .visite-passer {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    z-index: 30;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.6rem 1.1rem;
+    border-radius: 999px;
+    border: 1px solid color-mix(in srgb, var(--color-ivoire) 30%, transparent);
+    /* Fond quasi opaque : la lisibilité ne dépend pas de ce qui passe
+       derrière le bouton pendant la visite (audit contraste). */
+    background: color-mix(in srgb, var(--color-foret-fonce) 85%, transparent);
+    backdrop-filter: blur(8px);
+    color: var(--color-ivoire);
+    font-size: var(--text-mention);
+    font-weight: 600;
+    transition: border-color var(--duree-rapide) ease-out,
+      background-color var(--duree-rapide) ease-out;
+  }
+
+  .visite-passer:hover {
+    border-color: color-mix(in srgb, var(--color-bronze) 70%, transparent);
+    background: color-mix(in srgb, var(--color-foret-fonce) 75%, transparent);
+  }
+
+  .visite-passer:focus-visible {
+    outline: 2px solid var(--color-bronze-clair);
+    outline-offset: 2px;
+  }
+
+  /* --- Mode statique : scènes empilées --- */
+  .visite-scene-scene {
+    position: relative;
+  }
+
+  .visite-scene {
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    min-height: 82vh;
+    overflow: hidden;
+    background: var(--color-foret);
+  }
+
+  .visite-scene + .visite-scene {
+    border-top: 1px solid color-mix(in srgb, var(--color-ivoire) 12%, transparent);
+  }
+
+  .visite-photos {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2px;
+  }
+
+  .visite-photos:has(> :only-child) {
+    grid-template-columns: 1fr;
+  }
+
+  .visite-photo-cadre {
+    position: relative;
+    overflow: hidden;
+    background: var(--color-foret-fonce);
+  }
+
+  .visite-photo {
+    object-fit: cover;
+  }
+
+  .visite-placeholder {
+    position: absolute;
+    inset: 1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1.5px dashed color-mix(in srgb, var(--color-bronze) 55%, transparent);
+    border-radius: var(--radius-bloc, 1rem);
+    background: linear-gradient(
+      160deg,
+      var(--color-foret) 0%,
+      var(--color-foret-fonce) 100%
+    );
+  }
+
+  .visite-placeholder-libelle {
+    max-width: 26rem;
+    padding: 0 1.5rem;
+    text-align: center;
+    color: color-mix(in srgb, var(--color-ivoire) 65%, transparent);
+    font-size: var(--text-petit);
+    letter-spacing: 0.02em;
+  }
+
+  .visite-plein {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      165deg,
+      var(--color-foret-clair) 0%,
+      var(--color-foret-fonce) 85%
+    );
+  }
+
+  /* Voile de lisibilité au-dessus du visuel. */
+  .visite-voile {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(
+      to top,
+      color-mix(in srgb, var(--color-foret-fonce) 88%, transparent) 0%,
+      color-mix(in srgb, var(--color-foret-fonce) 35%, transparent) 45%,
+      transparent 75%
+    );
+  }
+
+  .visite-contenu {
+    position: relative;
+    z-index: 10;
+    width: 100%;
+    padding: clamp(1.5rem, 4vw, 4rem);
+    max-width: 56rem;
+  }
+
+  .visite-timeline {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: var(--color-bronze-clair);
+    font-size: var(--text-intitule);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-intitule);
+  }
+
+  .visite-numero {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 2.25rem;
+    padding: 0.2rem 0.5rem;
+    border: 1px solid color-mix(in srgb, var(--color-bronze) 55%, transparent);
+    border-radius: 999px;
+  }
+
+  .visite-sep {
+    width: 2.5rem;
+    height: 1px;
+    background: color-mix(in srgb, var(--color-bronze) 55%, transparent);
+  }
+
+  .visite-titre {
+    margin-top: 1.25rem;
+    color: var(--color-ivoire);
+    font-size: var(--text-titre-1);
+    line-height: 1.08;
+    letter-spacing: -0.022em;
+    font-weight: 800;
+    text-wrap: balance;
+  }
+
+  .visite-texte {
+    margin-top: 1.25rem;
+    max-width: 44rem;
+    color: color-mix(in srgb, var(--color-ivoire) 82%, transparent);
+    font-size: var(--text-chapo);
+    line-height: 1.6;
+  }
+
+  .visite-ctas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 2rem;
+  }
+
+  .visite-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.75rem 1.4rem;
+    border-radius: var(--radius-action, 0.75rem);
+    border: 1px solid color-mix(in srgb, var(--color-ivoire) 35%, transparent);
+    background: color-mix(in srgb, var(--color-ivoire) 8%, transparent);
+    color: var(--color-ivoire);
+    font-size: var(--text-petit);
+    font-weight: 600;
+    transition: border-color var(--duree-rapide) ease-out,
+      background-color var(--duree-rapide) ease-out;
+  }
+
+  .visite-cta:hover {
+    border-color: color-mix(in srgb, var(--color-bronze) 75%, transparent);
+    background: color-mix(in srgb, var(--color-bronze) 16%, transparent);
+  }
+
+  .visite-cta:focus-visible {
+    outline: 2px solid var(--color-bronze-clair);
+    outline-offset: 2px;
+  }
+
+  /* Repères de progression — masqués en mode statique. */
+  .visite-progression {
+    display: none;
+  }
+
+  /* ========================================================================
+     MODE CINÉMA — activé seulement avec JavaScript actif.
+     ======================================================================== */
+  .js .visite {
+    height: var(--hauteur-visite, auto);
+  }
+
+  .js .visite-scene-scene {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  .js .visite-scene {
+    position: absolute;
+    inset: 0;
+    min-height: 0;
+    opacity: 0;
+    visibility: hidden;
+    transform: scale(1.055);
+    transition: opacity var(--duree-lente, 900ms) ease-sortie,
+      transform 1400ms linear, visibility 0s linear var(--duree-lente, 900ms);
+  }
+
+  .js .visite-scene + .visite-scene {
+    border-top: none;
+  }
+
+  .js .visite-scene.est-voisine {
+    visibility: visible;
+    transition-delay: 0s;
+  }
+
+  .js .visite-scene.est-active {
+    opacity: 1;
+    visibility: visible;
+    transform: scale(1);
+    transition: opacity var(--duree-lente, 900ms) ease-sortie,
+      transform 2200ms ease-sortie;
+    transition-delay: 0s;
+  }
+
+  .js .visite-progression {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    position: absolute;
+    right: 1.25rem;
+    top: 50%;
+    z-index: 20;
+    transform: translateY(-50%);
+  }
+
+  .js .visite-pas {
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--color-ivoire) 28%, transparent);
+    transition: background-color var(--duree-rapide) ease-out,
+      transform var(--duree-rapide) ease-out;
+  }
+
+  .js .visite-pas.est-passee {
+    background: color-mix(in srgb, var(--color-bronze) 60%, transparent);
+  }
+
+  .js .visite-pas.est-active {
+    background: var(--color-bronze-clair);
+    transform: scale(1.35);
+  }
+
+  /* Mobile cinéma : progression horizontale en bas, moins d'éléments. */
+  @media (max-width: 640px) {
+    .js .visite-progression {
+      right: auto;
+      left: 50%;
+      top: auto;
+      bottom: 1.1rem;
+      transform: translateX(-50%);
+      flex-direction: row;
+    }
+
+    .visite-titre {
+      font-size: var(--text-titre-2);
+    }
+
+    .visite-texte {
+      font-size: var(--text-petit);
+    }
+  }
+
+  /* --- Réduction des animations : retour forcé au mode statique.
+         Le CSS prime sur l'état React : même si le composant croit être
+         en cinéma, la mise en page reste statique et lisible. --- */
+  @media (prefers-reduced-motion: reduce) {
+    .js .visite {
+      height: auto;
+    }
+
+    .js .visite-scene-scene {
+      position: relative;
+      height: auto;
+      overflow: visible;
+    }
+
+    .js .visite-scene {
+      position: relative;
+      inset: auto;
+      min-height: 82vh;
+      opacity: 1;
+      visibility: visible;
+      transform: none;
+      transition: none;
+    }
+
+    .js .visite-progression {
+      display: none;
     }
   }
 }

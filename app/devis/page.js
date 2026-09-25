@@ -28,7 +28,7 @@ const reperes = [
   },
   {
     icone: "check",
-    titre: "Deux minutes suffisent",
+    titre: "Formulaire court",
     texte:
       "Seuls votre nom, votre téléphone et votre besoin sont obligatoires.",
   },

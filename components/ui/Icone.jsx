@@ -81,6 +81,14 @@ const TRACES = {
     </>
   ),
   gestion: <path d="M3.5 20.5V10m5.5 10.5V4m5.5 16.5v-7m5.5 7V7" />,
+  // Loupe sur barre de résultats — solution Référencement & SEO
+  recherche: (
+    <>
+      <circle cx="11" cy="11" r="6.5" />
+      <path d="m15.8 15.8 4.7 4.7" />
+      <path d="M8.5 11h5M11 8.5v5" />
+    </>
+  ),
   automatisation: (
     <>
       <circle cx="12" cy="12" r="3.2" />

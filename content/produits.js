@@ -16,21 +16,24 @@ import { photo, photoLocal } from "@/lib/photos";
  *   credit          { auteur, profil } — obligatoire quand source = "web"
  *   illustration    clé de repli, lue par <IllustrationProduit />
  *
- * AUJOURD'HUI : photos Unsplash (imageSource "web"). La licence Unsplash
- * autorise l'usage commercial sans redevance ; les auteurs sont crédités
- * en bas de la page Produits, comme le demandent les conditions d'usage
- * de leur API. Aucune photo de fabricant ou de distributeur n'est
- * utilisée : les poser sur un site commercial sans licence serait une
- * contrefaçon.
+ * AUJOURD'HUI : trois sources, selon la fiabilité de chaque visuel :
+ *   - photos locales VÉRIFIÉES cohérentes avec le produit (casques,
+ *     microphones, câbles, climatiseur, écouteurs, ampoules) ;
+ *   - ILLUSTRATION vectorielle de marque pour les produits dont aucune
+ *     photo crédible n'est disponible — le repli est affiché tel quel,
+ *     jamais une photo qui ne montre pas le produit annoncé (audit
+ *     visuel du 2026-09-25 : une partie des anciens fichiers contenaient
+ *     des images sans rapport avec leur nom) ;
+ *   - pas de source "web" à l'usage : les photos Unsplash retenues ont
+ *     été téléchargées dans /public/images/produits/ et leur origine est
+ *     consignée dans public/images/credits-sources.md. La licence
+ *     Unsplash autorise l'usage commercial sans attribution obligatoire ;
+ *     aucune photo de fabricant ou de distributeur n'est utilisée : les
+ *     poser sur un site commercial sans licence serait une contrefaçon.
  *
  * CE QUE CES PHOTOS NE DISENT PAS — elles illustrent une FAMILLE de
  * produits, jamais un modèle précis ni une marque vendue par
- * LE COMPTOIR NUMÉRIQUE. La page Produits porte cette mention, qui doit
- * rester affichée tant que les photos ne sont pas celles de la boutique.
- *
- * `air-fryer` n'a pas de photo satisfaisante sur Unsplash : il garde son
- * illustration vectorielle. Le composant bascule seul, sans condition à
- * écrire dans les vues — c'est tout l'intérêt de cette structure.
+ * LE COMPTOIR NUMÉRIQUE. La page Produits porte cette mention.
  *
  * POUR PASSER AUX PHOTOS RÉELLES DE LA BOUTIQUE : déposer les fichiers
  * dans /public/images/produits/, renseigner `image` avec le chemin et
@@ -66,42 +69,48 @@ export const produits = [
     nom: "Réfrigérateur",
     univers: "electromenager",
     illustration: "refrigerateur",
-    ...photoLocal("produits/detail/refrigerateur.jpg", "Réfrigérateur moderne"),
+    image: null,
+    imageSource: "illustration",
   },
   {
     slug: "machine-a-laver",
     nom: "Machine à laver",
     univers: "electromenager",
     illustration: "machineALaver",
-    ...photoLocal("produits/detail/machine-a-laver.jpg", "Machine à laver"),
+    image: null,
+    imageSource: "illustration",
   },
   {
     slug: "micro-ondes",
     nom: "Micro-ondes",
     univers: "electromenager",
     illustration: "microOndes",
-    ...photoLocal("produits/detail/micro-ondes.jpg", "Micro-ondes"),
+    image: null,
+    imageSource: "illustration",
   },
   {
     slug: "cuisiniere",
     nom: "Cuisinière et four",
     univers: "electromenager",
     illustration: "cuisiniere",
-    ...photoLocal("produits/detail/micro-ondes.jpg", "Cuisinière professionnelle"),
+    image: null,
+    imageSource: "illustration",
   },
   {
     slug: "ventilateur",
     nom: "Ventilateur",
     univers: "electromenager",
     illustration: "ventilateur",
-    ...photoLocal("produits/detail/ventilateur.jpg", "Ventilateur"),
+    image: null,
+    imageSource: "illustration",
   },
   {
     slug: "blender",
     nom: "Blender et mixeur",
     univers: "electromenager",
     illustration: "blender",
-    ...photoLocal("produits/detail/blender.jpg", "Blender professionnel"),
+    image: null,
+    imageSource: "illustration",
   },
   {
     // Aucune photo d'air fryer exploitable sur Unsplash : illustration.
@@ -117,7 +126,8 @@ export const produits = [
     nom: "Fer à repasser",
     univers: "electromenager",
     illustration: "ferARepasser",
-    ...photoLocal("produits/detail/fer-a-repasser.jpg", "Fer à repasser"),
+    image: null,
+    imageSource: "illustration",
   },
 
   /* ---------------------------------------------------------------
@@ -128,21 +138,24 @@ export const produits = [
     nom: "Multiprise",
     univers: "electrique",
     illustration: "multiprise",
-    ...photoLocal("produits/detail/multiprise.jpg", "Multiprise professionnel"),
+    image: null,
+    imageSource: "illustration",
   },
   {
     slug: "rallonge",
     nom: "Rallonge",
     univers: "electrique",
     illustration: "rallonge",
-    ...photoLocal("produits/detail/rallonge.jpg", "Rallonge électrique"),
+    image: null,
+    imageSource: "illustration",
   },
   {
     slug: "prise-interrupteur",
     nom: "Prises et interrupteurs",
     univers: "electrique",
     illustration: "prise",
-    ...photoLocal("produits/detail/prise-interrupteur.jpg", "Prise et interrupteur"),
+    image: null,
+    imageSource: "illustration",
   },
   {
     slug: "cable",
@@ -163,7 +176,8 @@ export const produits = [
     nom: "Éclairage LED",
     univers: "electrique",
     illustration: "led",
-    ...photoLocal("produits/detail/eclairage-led.jpg", "Éclairage LED professionnel"),
+    image: null,
+    imageSource: "illustration",
   },
 
   /* ---------------------------------------------------------------
@@ -188,7 +202,8 @@ export const produits = [
     nom: "Enceintes Bluetooth",
     univers: "technologie-medias",
     illustration: "enceinte",
-    ...photoLocal("produits/detail/enceinte-bluetooth.jpg", "Enceinte Bluetooth"),
+    image: null,
+    imageSource: "illustration",
   },
   {
     slug: "microphone",
@@ -202,35 +217,40 @@ export const produits = [
     nom: "Ring lights",
     univers: "technologie-medias",
     illustration: "ringLight",
-    ...photoLocal("produits/detail/ring-light.jpg", "Ring light"),
+    image: null,
+    imageSource: "illustration",
   },
   {
     slug: "trepied",
     nom: "Trépieds",
     univers: "technologie-medias",
     illustration: "trepied",
-    ...photoLocal("produits/detail/trepied.jpg", "Trépied professionnel"),
+    image: null,
+    imageSource: "illustration",
   },
   {
     slug: "clavier",
     nom: "Claviers",
     univers: "technologie-medias",
     illustration: "clavier",
-    ...photoLocal("produits/detail/clavier.jpg", "Clavier mécanique"),
+    image: null,
+    imageSource: "illustration",
   },
   {
     slug: "souris",
     nom: "Souris",
     univers: "technologie-medias",
     illustration: "souris",
-    ...photoLocal("produits/detail/souris.jpg", "Souris professionnelle"),
+    image: null,
+    imageSource: "illustration",
   },
   {
     slug: "manette",
     nom: "Manettes et accessoires gaming",
     univers: "technologie-medias",
     illustration: "manette",
-    ...photoLocal("produits/detail/manette.jpg", "Manette gaming"),
+    image: null,
+    imageSource: "illustration",
   },
 ];
 

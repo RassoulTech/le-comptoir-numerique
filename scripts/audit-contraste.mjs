@@ -21,8 +21,9 @@ const PAGES = [
   ["accueil", "/"],
   ["a-propos", "/a-propos"],
   ["produits", "/produits"],
-  ["services", "/services"],
-  ["realisations", "/realisations"],
+  ["produits-electromenager", "/produits/electromenager"],
+  ["solutions-numeriques", "/solutions-numeriques"],
+  ["solution-sites-web", "/solutions/sites-web"],
   ["devis", "/devis"],
   ["contact", "/contact"],
 ];
@@ -63,6 +64,18 @@ for (const [nom, chemin] of PAGES) {
       ctx.fillStyle = "#ffffff";
       ctx.fillRect(0, 0, 1, 1);
       for (const couche of couches) {
+        if (typeof couche === "object") {
+          // Dégradé Tailwind : on peint from, puis to à moitié transparent.
+          // La moyenne des deux extrémités est une bonne approximation du
+          // rendu au centre de la carte, où vivent les textes.
+          ctx.fillStyle = couche.de;
+          ctx.fillRect(0, 0, 1, 1);
+          ctx.globalAlpha = 0.5;
+          ctx.fillStyle = couche.vers;
+          ctx.fillRect(0, 0, 1, 1);
+          ctx.globalAlpha = 1;
+          continue;
+        }
         ctx.fillStyle = couche;
         ctx.fillRect(0, 0, 1, 1);
       }
@@ -76,10 +89,17 @@ for (const [nom, chemin] of PAGES) {
       let noeud = element;
       while (noeud && noeud !== document.documentElement) {
         const style = getComputedStyle(noeud);
+        // Les dégradés Tailwind posent background-image, pas backgroundColor :
+        // les ignorer ferait mesurer les textes contre le fond de la SECTION
+        // et produirait des alarmes fausses (texte ivoire « sur ivoire »).
+        if (style.backgroundImage && style.backgroundImage !== "none") {
+          const de = style.getPropertyValue("--tw-gradient-from").trim();
+          const vers = style.getPropertyValue("--tw-gradient-to").trim();
+          if (de && vers) couches.push({ de, vers });
+        }
         const fond = style.backgroundColor;
         if (fond && fond !== "transparent") {
           // On empile même les fonds semi-transparents : ils comptent
-          ctx.fillStyle = fond;
           couches.push(fond);
         }
         noeud = noeud.parentElement;

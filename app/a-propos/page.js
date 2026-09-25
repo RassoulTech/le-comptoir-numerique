@@ -94,7 +94,7 @@ export default function PageAPropos() {
             </div>
 
             <div className="mt-8 flex flex-wrap gap-4">
-              <Bouton href="/services" variante="principal">
+              <Bouton href="/solutions-numeriques" variante="principal">
                 Découvrir nos solutions
                 <Icone nom="fleche" className="size-4" />
               </Bouton>

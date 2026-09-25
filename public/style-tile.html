@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Style tile — Le Comptoir Numérique</title>
+<meta name="robots" content="noindex, nofollow">
+<!--
+  STYLE TILE — LE COMPTOIR NUMÉRIQUE
+  Document de référence visuelle, autonome et modifiable (brief §13).
+  Il reflète le design system réel du site (app/globals.css) : toute
+  modification d'identité se fait dans les DEUX fichiers, en cohérence.
+
+  Palette stricte du brief : Forest Green #173F35 · Ivory #F5F0E6 ·
+  Bronze #B08D57 · Anthracite #252A28. Aucune autre teinte décorative.
+-->
+<style>
+  :root {
+    --foret: #173F35;
+    --foret-clair: #1F5548;
+    --foret-fonce: #0F2A24;
+    --ivoire: #F5F0E6;
+    --ivoire-clair: #FBF8F2;
+    --ivoire-fonce: #EBE4D5;
+    --bronze: #B08D57;
+    --bronze-clair: #C6A473;
+    --bronze-texte: #7A5F38; /* seule variante lisible en petit texte sur ivoire */
+    --anthracite: #252A28;
+    --anthracite-doux: #5A615E;
+    --radius-douce: .625rem;
+    --radius-action: .75rem;
+    --radius-carte: 1rem;
+    --radius-bloc: 1.5rem;
+    --ease-sortie: cubic-bezier(.16, 1, .3, 1);
+  }
+  * { box-sizing: border-box; margin: 0; }
+  body {
+    font-family: Manrope, "Segoe UI", system-ui, sans-serif;
+    background: var(--ivoire);
+    color: var(--anthracite);
+    line-height: 1.7;
+  }
+  .conteneur { max-width: 68rem; margin: 0 auto; padding: 0 1.5rem; }
+  section { padding: 3.5rem 0; }
+  .entete {
+    background: linear-gradient(160deg, var(--foret), var(--foret-fonce));
+    color: var(--ivoire);
+    padding: 4.5rem 0;
+  }
+  .entete h1 { font-size: clamp(2rem, 4vw, 3rem); letter-spacing: -.02em; }
+  .intitule {
+    font-size: .75rem; font-weight: 600; letter-spacing: .16em;
+    text-transform: uppercase; color: var(--bronze-texte);
+  }
+  .entete .intitule { color: var(--bronze-clair); }
+  h2 { font-size: clamp(1.5rem, 2.5vw, 2.1rem); color: var(--foret); letter-spacing: -.015em; margin: .35rem 0 1.75rem; }
+  h3 { font-size: 1.0625rem; color: var(--foret); }
+  p + p { margin-top: .75rem; }
+  .grille { display: grid; gap: 1.25rem; }
+  @media (min-width: 720px) { .grille.cols-2 { grid-template-columns: 1fr 1fr; } .grille.cols-4 { grid-template-columns: repeat(4, 1fr); } }
+
+  /* Couleurs */
+  .nuance { border-radius: var(--radius-carte); padding: 1.25rem; color: var(--ivoire); min-height: 7.5rem; display: flex; flex-direction: column; justify-content: flex-end; }
+  .nuance code { font-size: .8125rem; opacity: .85; }
+
+  /* Typographie */
+  .affichage { font-size: clamp(2.25rem, 5vw, 3.6rem); line-height: 1.03; letter-spacing: -.025em; font-weight: 800; color: var(--foret); }
+  .titre-2 { font-size: clamp(1.4rem, 2.6vw, 2rem); line-height: 1.14; font-weight: 700; color: var(--foret); }
+  .chapo { font-size: 1.125rem; color: var(--anthracite-doux); max-width: 42rem; }
+  .mention { font-size: .8125rem; color: var(--anthracite-doux); }
+
+  /* Boutons */
+  .bouton {
+    display: inline-flex; align-items: center; gap: .5rem;
+    padding: .85rem 1.5rem; border-radius: var(--radius-action);
+    font-size: .9375rem; font-weight: 600; text-decoration: none;
+    border: 0; cursor: pointer; transition: background-color .2s var(--ease-sortie), box-shadow .2s var(--ease-sortie), border-color .2s var(--ease-sortie);
+  }
+  .bouton-principal { background: var(--foret); color: var(--ivoire); box-shadow: 0 1px 2px rgb(15 42 36 / .16), 0 4px 12px rgb(15 42 36 / .16); }
+  .bouton-principal:hover { background: var(--foret-clair); }
+  .bouton-secondaire { background: transparent; color: var(--foret); box-shadow: inset 0 0 0 1px rgb(23 63 53 / .2); }
+  .bouton-secondaire:hover { background: rgb(23 63 53 / .04); box-shadow: inset 0 0 0 1px rgb(23 63 53 / .4); }
+  .bouton-bronze { background: linear-gradient(135deg, var(--bronze), #9A7A4A); color: #fff; font-weight: 700; }
+  .bouton-bronze:hover { filter: brightness(1.08); }
+  .bouton-contour-clair { background: transparent; color: var(--ivoire); box-shadow: inset 0 0 0 1px rgb(245 240 230 / .3); }
+  .bouton-contour-clair:hover { background: rgb(245 240 230 / .1); }
+  .bouton:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible {
+    outline: 2px solid var(--bronze-clair); outline-offset: 2px;
+  }
+  .bouton[disabled] { opacity: .5; cursor: not-allowed; }
+
+  /* Cartes & badges */
+  .carte {
+    background: var(--ivoire-clair); border: 1px solid rgb(37 42 40 / .08);
+    border-radius: var(--radius-carte); padding: 1.5rem; box-shadow: 0 2px 8px rgb(23 63 53 / .05);
+    transition: border-color .2s var(--ease-sortie);
+  }
+  .carte:hover { border-color: rgb(176 141 87 / .4); }
+  .badge {
+    display: inline-flex; padding: .3rem .8rem; border-radius: 999px;
+    background: rgb(176 141 87 / .12); color: var(--bronze-texte);
+    font-size: .75rem; font-weight: 700; letter-spacing: .04em;
+  }
+  .badge-sombre { background: rgb(176 141 87 / .18); color: var(--bronze-clair); }
+
+  /* Formulaires */
+  .champ label { display: block; font-size: .875rem; font-weight: 600; color: var(--foret); margin-bottom: .4rem; }
+  .champ input, .champ textarea, .champ select {
+    width: 100%; padding: .8rem 1rem; border-radius: var(--radius-action);
+    border: 1px solid rgb(37 42 40 / .18); background: #fff; color: var(--anthracite);
+    font: inherit; transition: border-color .2s var(--ease-sortie), box-shadow .2s var(--ease-sortie);
+  }
+  .champ input:hover, .champ textarea:hover { border-color: rgb(37 42 40 / .32); }
+  .erreur { font-size: .8125rem; color: #9B3A2E; margin-top: .35rem; }
+
+  /* Fond sombre de démonstration */
+  .sombre { background: var(--foret); color: var(--ivoire); border-radius: var(--radius-bloc); padding: 2rem; margin-top: 1.25rem; }
+  .sombre h2 { color: var(--ivoire); }
+</style>
+</head>
+<body>
+
+<header class="entete">
+  <div class="conteneur">
+    <p class="intitule">Style tile · Design system</p>
+    <h1>Le Comptoir Numérique</h1>
+    <p style="opacity:.8; max-width:34rem;">Le numérique à portée de main. · Thiès, Sénégal</p>
+  </div>
+</header>
+
+<div class="conteneur">
+
+  <section>
+    <p class="intitule">01 · Couleurs</p>
+    <h2>Palette institutionnelle stricte</h2>
+    <div class="grille cols-4">
+      <div class="nuance" style="background:#173F35"><strong>Forest Green</strong><code>#173F35 — institutionnel</code></div>
+      <div class="nuance" style="background:#F5F0E6; color:#252A28"><strong style="color:#252A28">Ivory</strong><code style="color:#5A615E">#F5F0E6 — fond clair</code></div>
+      <div class="nuance" style="background:#B08D57"><strong>Bronze</strong><code>#B08D57 — accent premium</code></div>
+      <div class="nuance" style="background:#252A28"><strong>Anthracite</strong><code>#252A28 — texte</code></div>
+    </div>
+    <p class="mention" style="margin-top:1rem;">Teintes dérivées (survol, séparateurs, textes secondaires) : #1F5548 · #0F2A24 · #FBF8F2 · #EBE4D5 · #C6A473 · #7A5F38 · #5A615E. Aucun bleu électrique, turquoise, violet, rose, néon ni gradient criard.</p>
+  </section>
+
+  <section>
+    <p class="intitule">02 · Typographie</p>
+    <h2>Manrope, échelle fluide</h2>
+    <p class="affichage">Affichage — le numérique à portée de main.</p>
+    <p class="titre-2" style="margin-top:1rem;">Titre de section — des produits, des solutions</p>
+    <p class="chapo" style="margin-top:1rem;">Chapô — phrase d'introduction d'une section, taille fluide entre 1.0625rem et 1.25rem, interlignage généreux.</p>
+    <p>Corps de texte — 1rem / 1.7. Le texte courant reste sobre : la hiérarchie vient du contraste des niveaux, pas de la décoration.</p>
+    <p class="mention">Mention — .8125rem, légendes et crédits photo.</p>
+  </section>
+
+  <section>
+    <p class="intitule">03 · Actions</p>
+    <h2>Boutons et états</h2>
+    <div style="display:flex; flex-wrap:wrap; gap:.75rem;">
+      <button class="bouton bouton-principal">Principal</button>
+      <button class="bouton bouton-secondaire">Secondaire</button>
+      <button class="bouton bouton-bronze">Bronze (CTA)</button>
+      <button class="bouton bouton-contour-clair">Contour clair</button>
+      <button class="bouton bouton-principal" disabled>Disabled</button>
+    </div>
+    <p class="mention" style="margin-top:.75rem;">Chaque bouton a un état hover, un état focus-visible (anneau bronze) et un état disabled. La flèche d'un bouton avance au survol (classe <code>.action</code> du design system).</p>
+  </section>
+
+  <section>
+    <p class="intitule">04 · Composants</p>
+    <h2>Cartes, badges, formulaires</h2>
+    <div class="grille cols-2">
+      <div class="carte">
+        <span class="badge">Badge</span>
+        <h3 style="margin-top:.75rem;">Carte produit</h3>
+        <p class="mention">Ratio photo 4:3, fond ivoire clair, bord discret, survol bronze. Aucun prix affiché : le catalogue présente des familles confirmées.</p>
+      </div>
+      <div class="carte">
+        <form onsubmit="return false">
+          <div class="champ">
+            <label for="st-nom">Nom et prénom</label>
+            <input id="st-nom" type="text" placeholder="Votre nom">
+          </div>
+          <div class="champ" style="margin-top:1rem;">
+            <label for="st-msg">Message</label>
+            <textarea id="st-msg" rows="2" placeholder="Votre besoin"></textarea>
+            <p class="erreur">Ce champ est requis — message d'erreur explicite.</p>
+          </div>
+          <button class="bouton bouton-bronze" style="margin-top:1rem;">Envoyer</button>
+        </form>
+      </div>
+    </div>
+
+    <div class="sombre">
+      <h2>Section sombre (vert forêt)</h2>
+      <p style="opacity:.8; max-width:40rem;">Sur fond forêt : textes en ivoire, accents bronze clair, badges sombres. Header et pied de page suivent ce contrat de lisibilité.</p>
+      <div style="display:flex; gap:.75rem; margin-top:1rem;">
+        <span class="badge-sombre">Badge sombre</span>
+        <button class="bouton bouton-contour-clair">Contour clair</button>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <p class="intitule">05 · Mouvement</p>
+    <h2>Micro-interactions sobres</h2>
+    <p class="chapo">Apparitions progressives (translation 8–14px + fondu, courbe ease-sortie), transitions 120–640ms, zoom photo léger au survol. <strong>Tout est désactivé sous <code>prefers-reduced-motion</code></strong> — le contenu reste alors intégralement affiché en statique.</p>
+  </section>
+
+</div>
+</body>
+</html>

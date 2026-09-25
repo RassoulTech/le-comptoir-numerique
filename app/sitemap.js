@@ -1,28 +1,44 @@
 import { siteUrl } from "@/content/entreprise";
 import { liensNavigation, lienDevis } from "@/lib/navigation";
+import { solutions } from "@/content/prestations";
+import { universProduits } from "@/content/univers";
 
 /**
- * Plan du site généré automatiquement à partir de la navigation.
- * Ajouter une page à lib/navigation.js suffit à la référencer ici.
+ * Plan du site généré automatiquement : navigation principale, action de
+ * devis, pages détail des solutions numériques et pages catégorie
+ * produits. Les pages redirigées ou hors navigation (ex. /services qui
+ * renvoie vers /solutions-numeriques, /realisations en cours de
+ * constitution) ne sont volontairement pas référencées.
  * Disponible sur /sitemap.xml
  */
 export default function sitemap() {
   const maintenant = new Date();
 
-  const priorites = {
-    "/": 1,
-    "/devis": 0.9,
-    "/produits": 0.8,
-    "/services": 0.8,
-    "/contact": 0.7,
-    "/a-propos": 0.6,
-    "/realisations": 0.6,
-  };
+  const entrees = [
+    { href: "/", priorite: 1, frequence: "weekly" },
+    { href: lienDevis.href, priorite: 0.9, frequence: "monthly" },
+    { href: "/produits", priorite: 0.8, frequence: "weekly" },
+    { href: "/solutions-numeriques", priorite: 0.8, frequence: "monthly" },
+    { href: "/a-propos", priorite: 0.6, frequence: "monthly" },
+    { href: "/contact", priorite: 0.7, frequence: "monthly" },
 
-  return [...liensNavigation, lienDevis].map((lien) => ({
-    url: new URL(lien.href, siteUrl).toString(),
+    ...solutions.map((s) => ({
+      href: `/solutions/${s.slug}`,
+      priorite: 0.7,
+      frequence: "monthly",
+    })),
+
+    ...universProduits.map((u) => ({
+      href: `/produits/${u.slug}`,
+      priorite: 0.7,
+      frequence: "weekly",
+    })),
+  ];
+
+  return entrees.map(({ href, priorite, frequence }) => ({
+    url: new URL(href, siteUrl).toString(),
     lastModified: maintenant,
-    changeFrequency: lien.href === "/" ? "weekly" : "monthly",
-    priority: priorites[lien.href] ?? 0.5,
+    changeFrequency: frequence,
+    priority: priorite,
   }));
 }

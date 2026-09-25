@@ -22,9 +22,9 @@ export default function PageContact() {
   const moyensDeContact = [
     {
       icone: "telephoneAppel",
-      titre: "Téléphone",
+      titre: "Téléphone — Pôle Produits",
       texte:
-        "Le canal le plus direct pour une demande de prix immédiate ou une question rapide.",
+        "Le canal le plus direct pour une demande de prix immédiate ou une question rapide. Le pôle Solutions numériques est joignable au 77 383 13 64.",
       libelle: telephone.affichage,
       lien: telephone.lien,
       badge: "Appel direct",
@@ -205,15 +205,42 @@ export default function PageContact() {
                 Situé à Thiès, Le Comptoir Numérique vous accueille pour vos achats d&apos;équipements, tests de matériel et rendez-vous de cadrage projet.
               </p>
 
-              <div className="mt-6 rounded-xl bg-ivoire/5 p-4 border border-ivoire/10 backdrop-blur-sm">
-                <p className="text-mention text-bronze-clair font-bold uppercase tracking-wider">
-                  Service Client & Devis
-                </p>
-                <p className="mt-1 text-corps font-bold text-ivoire">
-                  {entreprise.telephone.affichage}
-                </p>
-                <p className="mt-0.5 text-mention text-ivoire/70">
-                  Du lundi au samedi
+              {/* Les deux pôles, chacun avec son téléphone et son WhatsApp
+                  dédiés : le visiteur choisit son interlocuteur en un clic. */}
+              <div className="mt-6 grid gap-3">
+                {Object.entries(entreprise.poles).map(([cle, pole]) => (
+                  <div
+                    key={cle}
+                    className="rounded-xl border border-ivoire/10 bg-ivoire/5 p-4 backdrop-blur-sm"
+                  >
+                    <p className="text-mention font-bold uppercase tracking-wider text-bronze-clair">
+                      {pole.nom}
+                    </p>
+                    <div className="mt-2 flex flex-wrap gap-2">
+                      <a
+                        href={pole.telephone.lien}
+                        className="inline-flex items-center gap-2 rounded-action border border-ivoire/15 bg-ivoire/[0.06] px-3.5 py-2 text-petit font-semibold text-ivoire transition-colors hover:border-bronze/60"
+                      >
+                        <Icone nom="telephoneAppel" className="size-4 text-bronze-clair" />
+                        {pole.telephone.affichage}
+                      </a>
+                      <a
+                        href={`https://wa.me/${pole.whatsapp.numero}?text=${encodeURIComponent(`Bonjour, je vous contacte au sujet du ${pole.nom.toLowerCase()}.`)}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-2 rounded-action border border-ivoire/15 bg-ivoire/[0.06] px-3.5 py-2 text-petit font-semibold text-ivoire transition-colors hover:border-bronze/60"
+                      >
+                        <Icone nom="whatsapp" className="size-4 text-[#25D366]" />
+                        WhatsApp
+                      </a>
+                    </div>
+                  </div>
+                ))}
+                <p className="text-mention text-ivoire/70">
+                  Horaires :{" "}
+                  {entreprise.horaires.lignes
+                    .map((l) => `${l.jours}, ${l.heures}`)
+                    .join(" · ")}
                 </p>
               </div>
             </div>

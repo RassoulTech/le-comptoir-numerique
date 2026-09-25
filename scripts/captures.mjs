@@ -30,8 +30,10 @@ const PAGES = [
   ["accueil", "/"],
   ["a-propos", "/a-propos"],
   ["produits", "/produits"],
-  ["services", "/services"],
-  ["realisations", "/realisations"],
+  ["produits-electromenager", "/produits/electromenager"],
+  ["solutions-numeriques", "/solutions-numeriques"],
+  ["solution-sites-web", "/solutions/sites-web"],
+  ["solution-referencement-seo", "/solutions/referencement-seo"],
   ["devis", "/devis"],
   ["contact", "/contact"],
 ];
@@ -113,10 +115,38 @@ for (const [nom, chemin] of PAGES) {
   await contexte.close();
 }
 
-/* 4. Formulaire : erreurs de validation serveur (champs vides) */
+/*
+   4. & 5. Formulaire en trois étapes (wizard) :
+        1. type de besoin (radios) → 2. message, budget, délai →
+        3. coordonnées + envoi. La validation est côté serveur : si une
+        étape est incomplète, le serveur renvoie les erreurs et le
+        formulaire ramène sur la bonne étape.
+*/
+
+/* Parcours complet jusqu'à l'envoi, étape par étape. */
+async function remplirEtAllerAletaPage3(page, { message = true } = {}) {
+  await page.goto(`${BASE}/devis`, { waitUntil: "networkidle" });
+  // Étape 1 : choisir un type de besoin.
+  await page
+    .locator('input[name="typeBesoin"][value="site-web"]')
+    .check();
+  await page
+    .getByRole("button", { name: /continuer \(détails/i })
+    .click();
+  // Étape 2 : message obligatoire.
+  if (message) {
+    await page.fill(
+      "#message",
+      "Ceci est un test de bout en bout du formulaire.",
+    );
+  }
+  await page.getByRole("button", { name: /continuer \(coordonnées/i }).click();
+}
+
+/* 4. Formulaire : erreurs de validation serveur (coordonnées vides) */
 {
   const { contexte, page } = await nouvelOnglet(1280, 900);
-  await page.goto(`${BASE}/devis`, { waitUntil: "networkidle" });
+  await remplirEtAllerAletaPage3(page);
   await page.getByRole("button", { name: /envoyer ma demande/i }).click();
   await page.waitForTimeout(1500);
   await page.screenshot({
@@ -124,25 +154,29 @@ for (const [nom, chemin] of PAGES) {
     fullPage: true,
   });
   const messages = await page.locator('[role="alert"]').allTextContents();
-  console.log("Messages d'erreur affiches :", messages.length);
-  messages.forEach((m) => console.log("   •", m));
+  const champs = await page
+    .locator("text=/Merci d'indiquer votre nom|téléphone est nécessaire/")
+    .allTextContents();
+  console.log(
+    "Messages d'erreur affiches (alertes globales + champs) :",
+    messages.length + champs.length,
+  );
+  [...messages, ...champs].forEach((m) => console.log("   •", m));
   await contexte.close();
 }
 
-/* 5. Formulaire : envoi valide */
+/* 5. Formulaire : envoi valide, de bout en bout */
 {
   const { contexte, page } = await nouvelOnglet(1280, 900);
-  await page.goto(`${BASE}/devis`, { waitUntil: "networkidle" });
+  await remplirEtAllerAletaPage3(page);
   await page.fill("#nom", "Test Dione");
-  await page.fill("#telephone", "+221 77 591 94 73");
+  await page.fill("#telephone", "+221 77 000 00 00");
   await page.fill("#email", "test@exemple.com");
-  await page.selectOption("#typeBesoin", "site-web");
-  await page.fill("#message", "Ceci est un test de bout en bout du formulaire.");
   await page.getByRole("button", { name: /envoyer ma demande/i }).click();
   await page.waitForTimeout(2500);
   await page.screenshot({ path: `${DOSSIER}/formulaire-succes.png`, fullPage: true });
   const confirmation = await page
-    .getByText(/votre demande est bien partie/i)
+    .getByText(/votre demande est bien enregistrée/i)
     .count();
   console.log(
     confirmation > 0

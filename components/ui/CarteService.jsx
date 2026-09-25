@@ -1,3 +1,4 @@
+import Link from "next/link";
 import Icone from "./Icone";
 import Photo from "./Photo";
 
@@ -13,11 +14,13 @@ import Photo from "./Photo";
  * montre pas un écran de Word pour dire qu'on l'installe.
  *
  * `sombre` adapte la carte à une section sur fond vert forêt.
+ * `href` rend la carte entièrement cliquable vers une page détail :
+ * l'appelant fournit l'URL, la carte n'invente rien.
  */
-export default function CarteService({ service, sombre = false }) {
+export default function CarteService({ service, sombre = false, href }) {
   const avecPhoto = Boolean(service.visuel?.image);
 
-  return (
+  const contenu = (
     <article
       className={`carte group flex h-full flex-col overflow-hidden rounded-carte border ${
         sombre
@@ -82,7 +85,33 @@ export default function CarteService({ service, sombre = false }) {
             </li>
           ))}
         </ul>
+
+        {href && (
+          <p
+            className={`mt-5 flex items-center gap-2 text-mention font-semibold ${
+              sombre ? "text-bronze-clair" : "text-bronze-texte"
+            }`}
+          >
+            Découvrir cette solution
+            <Icone
+              nom="fleche"
+              className="size-4 transition-transform duration-(--duree-courte) ease-sortie group-hover:translate-x-1"
+            />
+          </p>
+        )}
       </div>
     </article>
+  );
+
+  if (!href) return contenu;
+
+  return (
+    <Link
+      href={href}
+      className="block h-full"
+      aria-label={`${service.nom} — lire la page détaillée`}
+    >
+      {contenu}
+    </Link>
   );
 }

@@ -107,13 +107,17 @@ export default function Entete() {
           </nav>
 
           <div className="flex items-center gap-3 justify-self-end">
-            {/* Bouton Devis principal en bronze / forêt */}
+            {/* Bouton Devis principal en bronze / forêt.
+                Libellé raccourci sur très petit écran pour que logo +
+                CTA + menu tiennent sans débordement (brief §33). */}
             <Link
               href={lienDevis.href}
+              aria-label={lienDevis.libelle}
               className="action inline-flex items-center gap-2 rounded-action bg-foret px-4 py-2.5 text-mention font-semibold text-ivoire shadow-action hover:bg-foret-clair hover:shadow-action-survol sm:px-5 sm:text-petit"
             >
-              <span>{lienDevis.libelle}</span>
-              <Icone nom="fleche" className="size-4" />
+              <span className="hidden sm:inline">{lienDevis.libelle}</span>
+              <span className="sm:hidden">Devis</span>
+              <Icone nom="fleche" className="hidden size-4 sm:block" />
             </Link>
 
             {/* Bouton menu mobile */}

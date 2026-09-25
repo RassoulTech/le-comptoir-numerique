@@ -20,7 +20,45 @@ export const entreprise = {
   positionnement:
     "Produits électroniques, électriques, électroménagers et solutions numériques à Thiès, Sénégal.",
 
-  /* --- Téléphone (confirmé) --- */
+  /* --- PÔLES ---
+      L'entreprise est joignable sur deux canaux distincts, un par pôle.
+      Chaque page et chaque CTA cite le numéro du pôle concerné : la vente
+      de matériel et le conseil en solutions numériques n'ont pas le même
+      interlocuteur. Les champs `telephone` et `whatsapp` qui suivent
+      restent ceux du PÔLE PRODUITS pour compatibilité avec le code
+      existant — utiliser de préférence `poles`. */
+  poles: {
+    produits: {
+      nom: "Pôle Produits",
+      description:
+        "Électronique, électrique, électroménager, technologie & médias.",
+      telephone: {
+        affichage: "+221 77 591 94 73",
+        lien: "tel:+221775919473",
+      },
+      whatsapp: {
+        numero: "221775919473",
+        affichage: "+221 77 591 94 73",
+      },
+      aDefinir: false,
+    },
+    solutions: {
+      nom: "Pôle Solutions numériques",
+      description:
+        "Sites web, applications, logiciels, automatisation, marketing digital, SEO.",
+      telephone: {
+        affichage: "+221 77 383 13 64",
+        lien: "tel:+221773831364",
+      },
+      whatsapp: {
+        numero: "221773831364",
+        affichage: "+221 77 383 13 64",
+      },
+      aDefinir: false,
+    },
+  },
+
+  /* --- Téléphone général (PÔLE PRODUITS, confirmé) --- */
   telephone: {
     affichage: "+221 77 591 94 73",
     lien: "tel:+221775919473",
@@ -96,4 +134,19 @@ export function lienWhatsApp(message) {
 /** Retourne l'URL du groupe WhatsApp. */
 export function lienGroupeWhatsApp() {
   return entreprise.whatsapp.groupeUrl;
+}
+
+/**
+ * Construit un lien WhatsApp vers le pôle demandé, avec message pré-rempli.
+ * @param {"produits"|"solutions"} [pole]
+ * @param {string} [message] Message personnalisé ; défaut selon le pôle.
+ */
+export function lienWhatsAppPole(pole = "produits", message) {
+  const p = entreprise.poles[pole] ?? entreprise.poles.produits;
+  const texte =
+    message ??
+    (pole === "solutions"
+      ? "Bonjour, je vous contacte au sujet d'une solution numérique (site web, application, logiciel, automatisation, marketing digital, SEO)."
+      : entreprise.whatsapp.messagePreRempli);
+  return `https://wa.me/${p.whatsapp.numero}?text=${encodeURIComponent(texte)}`;
 }

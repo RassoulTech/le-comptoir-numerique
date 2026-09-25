@@ -49,27 +49,8 @@ import { photo, photoLocal } from "@/lib/photos";
 
 /** @type {Univers[]} */
 export const univers = [
-  {
-    slug: "technologie-medias",
-    nom: "Technologie & Médias",
-    signature: "Écouter, capter, créer",
-    description:
-      "Le matériel d'écoute, de captation et d'usage quotidien : audio, accessoires téléphone et périphériques.",
-    familles: [
-      "Écouteurs et casques",
-      "Microphones",
-      "Trépieds et supports",
-      "Appareils et accessoires Bluetooth",
-      "Claviers, souris et manettes",
-      "Ring lights et création de contenu",
-      "Coques et protections",
-    ],
-    icone: "casque",
-    rang: "majeur",
-    visuel: {
-      ...photoLocal("produits/audio-video.jpg", "Microphone de studio et équipement audio professionnel"),
-    },
-  },
+  /* Ordre conforme au brief : Électronique · Électrique · Électroménager ·
+     Technologie & Médias, puis le pôle numérique (hors catalogue produits). */
   {
     slug: "electronique",
     nom: "Électronique",
@@ -126,6 +107,27 @@ export const univers = [
     },
   },
   {
+    slug: "technologie-medias",
+    nom: "Technologie & Médias",
+    signature: "Écouter, capter, créer",
+    description:
+      "Le matériel d'écoute, de captation et d'usage quotidien : audio, accessoires téléphone et périphériques.",
+    familles: [
+      "Écouteurs et casques",
+      "Microphones",
+      "Trépieds et supports",
+      "Appareils et accessoires Bluetooth",
+      "Claviers, souris et manettes",
+      "Ring lights et création de contenu",
+      "Coques et protections",
+    ],
+    icone: "casque",
+    rang: "majeur",
+    visuel: {
+      ...photoLocal("produits/audio-video.jpg", "Microphone de studio et équipement audio professionnel"),
+    },
+  },
+  {
     slug: "solutions-numeriques",
     nom: "Solutions et services numériques",
     signature: "Construire, installer, former",
@@ -142,7 +144,7 @@ export const univers = [
     icone: "web",
     rang: "majeur",
     /** Seul univers qui ne renvoie pas vers le catalogue produits. */
-    href: "/services",
+    href: "/solutions-numeriques",
     visuel: {
       ...photoLocal("hero-tech-computer.jpg", "Solution numérique moderne : ordinateur portable affichant une interface web"),
     },

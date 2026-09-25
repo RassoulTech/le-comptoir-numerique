@@ -39,7 +39,10 @@ function Visuel({ univers, sizes, largeur }) {
 }
 
 export default function CarteUnivers({ univers, sombre = false }) {
-  const lien = univers.href ?? `/produits#${univers.slug}`;
+  // Les quatre univers produits ont désormais chacun une page dédiée
+  // /produits/<slug> : les cartes y mènent directement. Le pôle
+  // numérique garde son `href` propre, défini dans les données.
+  const lien = univers.href ?? `/produits/${univers.slug}`;
   const majeur = univers.rang === "majeur";
 
   const bordure = sombre
